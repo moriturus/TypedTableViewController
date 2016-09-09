@@ -27,6 +27,8 @@ public class TypedTableViewController<T: CollectionType where T.Index == Int>: U
         super.loadView()
         
         let tableView = UITableView(frame: view.bounds, style: style)
+        tableView.delegate = self
+        tableView.dataSource = self
         view.addSubview(tableView)
         
         self.tableView = tableView
