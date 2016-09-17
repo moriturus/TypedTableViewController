@@ -11,39 +11,39 @@ import UIKit
 /// Extensions for `UITableView`
 extension UITableView {
     
-    public func registerForHeaderFooterView<T: UIView where T: Reusable>(_: T.Type) {
+    public func registerForHeaderFooterView<T: UIView>(_: T.Type) where T: Reusable {
         
-        registerClass(T.self, forHeaderFooterViewReuseIdentifier: T.reusableIdentifier)
+        self.register(T.self, forHeaderFooterViewReuseIdentifier: T.reusableIdentifier)
         
     }
     
-    public func registerForHeaderFooterView<T: UIView where T: Reusable, T: NibLoadable>(_: T.Type) {
+    public func registerForHeaderFooterView<T: UIView>(_: T.Type) where T: Reusable, T: NibLoadable {
         
-        let bundle = NSBundle(forClass: T.self)
+        let bundle = Bundle(for: T.self)
         let nib = UINib(nibName: T.nibName, bundle: bundle)
         
-        registerNib(nib, forHeaderFooterViewReuseIdentifier: T.reusableIdentifier)
+        self.register(nib, forHeaderFooterViewReuseIdentifier: T.reusableIdentifier)
         
     }
     
-    public func register<T: UITableViewCell where T: Reusable>(_: T.Type) {
+    public func register<T: UITableViewCell>(_: T.Type) where T: Reusable {
         
-        registerClass(T.self, forCellReuseIdentifier: T.reusableIdentifier)
+        self.register(T.self, forCellReuseIdentifier: T.reusableIdentifier)
         
     }
     
-    public func register<T: UITableViewCell where T: Reusable, T: NibLoadable>(_: T.Type) {
+    public func register<T: UITableViewCell>(_: T.Type) where T: Reusable, T: NibLoadable {
         
-        let bundle = NSBundle(forClass: T.self)
+        let bundle = Bundle(for: T.self)
         let nib = UINib(nibName: T.nibName, bundle: bundle)
         
-        registerNib(nib, forCellReuseIdentifier: T.reusableIdentifier)
+        self.register(nib, forCellReuseIdentifier: T.reusableIdentifier)
         
     }
     
-    public func dequeueReusableHeaderFooterView<T: UIView where T: Reusable>(forSection section: Int) -> T {
+    public func dequeueReusableHeaderFooterView<T: UIView>(forSection section: Int) -> T where T: Reusable {
         
-        guard let v = dequeueReusableHeaderFooterViewWithIdentifier(T.reusableIdentifier) as? T else {
+        guard let v = self.dequeueReusableHeaderFooterView(withIdentifier: T.reusableIdentifier) as? T else {
             fatalError("Could not dequeue header/footer view with identifier: \(T.reusableIdentifier)")
         }
         
@@ -51,9 +51,9 @@ extension UITableView {
         
     }
     
-    public func dequeueReusableCell<T: UITableViewCell where T: Reusable>(forIndexPath indexPath: NSIndexPath) -> T {
+    public func dequeueReusableCell<T: UITableViewCell>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
         
-        guard let c = dequeueReusableCellWithIdentifier(T.reusableIdentifier, forIndexPath: indexPath) as? T else {
+        guard let c = self.dequeueReusableCell(withIdentifier: T.reusableIdentifier, for: indexPath) as? T else {
             fatalError("Could not dequeue cell with identifier: \(T.reusableIdentifier)")
         }
         

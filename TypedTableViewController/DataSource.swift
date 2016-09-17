@@ -6,7 +6,7 @@
 //  Copyright © 2016 Henrique Sasaki Yuya. All rights reserved.
 //
 
-extension CollectionType where Index == Int {
+extension Collection where Index == Int, Self.IndexDistance == Int {
     
     public var numberOfSections: Int {
         
@@ -14,7 +14,7 @@ extension CollectionType where Index == Int {
         
     }
     
-    public func numberOfRowsInSection(section: Int) -> Int {
+    public func numberOfRows(inSection section: Int) -> Int {
         
         return self.count
         
@@ -22,19 +22,19 @@ extension CollectionType where Index == Int {
     
 }
 
-extension MutableCollectionType where Index == Int {
+extension MutableCollection where Index == Int {
     
-    public subscript(indexPath: NSIndexPath) -> Self.Generator.Element {
+    public subscript(indexPath: IndexPath) -> Self.Iterator.Element {
         
         set {
             
-            self[indexPath.row] = newValue
+            self[(indexPath as NSIndexPath).row] = newValue
             
         }
         
         get {
             
-            return self[indexPath.row]
+            return self[(indexPath as NSIndexPath).row]
             
         }
         
@@ -42,7 +42,7 @@ extension MutableCollectionType where Index == Int {
     
 }
 
-extension CollectionType where Generator.Element: CollectionType, Index == Int, Generator.Element.Index == Int {
+extension Collection where Iterator.Element: Collection, Index == Int, Iterator.Element.Index == Int, Self.IndexDistance == Int, Self.Iterator.Element.IndexDistance == Int {
     
     public var numberOfSections: Int {
         
@@ -50,7 +50,7 @@ extension CollectionType where Generator.Element: CollectionType, Index == Int, 
         
     }
     
-    public func numberOfRowsInSection(section: Int) -> Int {
+    public func numberOfRows(inSection section: Int) -> Int {
         
         return self[section].count
         
@@ -58,19 +58,19 @@ extension CollectionType where Generator.Element: CollectionType, Index == Int, 
     
 }
 
-extension MutableCollectionType where Generator.Element: MutableCollectionType, Index == Int, Generator.Element.Index == Int {
+extension MutableCollection where Iterator.Element: MutableCollection, Index == Int, Iterator.Element.Index == Int {
     
-    public subscript(indexPath: NSIndexPath) -> Self.Generator.Element.Generator.Element {
+    public subscript(indexPath: IndexPath) -> Self.Iterator.Element.Iterator.Element {
         
         set {
             
-            self[indexPath.section][indexPath.row] = newValue
+            self[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row] = newValue
             
         }
         
         get {
             
-            return self[indexPath.section][indexPath.row]
+            return self[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
             
         }
         
