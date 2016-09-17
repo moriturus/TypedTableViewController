@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class TypedTableViewController<T: CollectionType where T.Index == Int>: UIViewController, UITableViewDelegate, UITableViewDataSource {
+open class TypedTableViewController<T: Collection>: UIViewController, UITableViewDelegate, UITableViewDataSource where T.Index == Int, T.IndexDistance == Int {
     
-    public weak var tableView: UITableView!
+    open weak var tableView: UITableView!
     private let style: UITableViewStyle
-    public var dataSource: T
+    open var dataSource: T
     
     public init(dataSource: T, style: UITableViewStyle) {
         
@@ -21,8 +21,12 @@ public class TypedTableViewController<T: CollectionType where T.Index == Int>: U
         super.init(nibName: nil, bundle: nil)
         
     }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    public override func loadView() {
+    open override func loadView() {
         
         super.loadView()
         
@@ -38,21 +42,21 @@ public class TypedTableViewController<T: CollectionType where T.Index == Int>: U
         
     }
     
-    public func registerTableViewHeaderFooterViewClasses(forTableView tableView: UITableView) {
+    open func registerTableViewHeaderFooterViewClasses(forTableView tableView: UITableView) {
         
         
     }
     
-    public func registerTableViewCellClasses(forTableView tableView: UITableView) {
+    open func registerTableViewCellClasses(forTableView tableView: UITableView) {
 
         
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.numberOfRowsInSection(section)
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.numberOfRows(inSection: section)
     }
 
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         fatalError("not implemented")
     }
     

@@ -37,7 +37,7 @@ extension NibLoadable where Self: UIView {
     
     /// The class name is used for nib file name by default.
     public static var nibName: String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+        return NSStringFromClass(self).components(separatedBy: ".").last!
     }
     
 }
